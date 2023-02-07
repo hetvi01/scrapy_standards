@@ -13,7 +13,7 @@ class QuoteWebsiteItem(item.Item):
     author = item.Field()
     tags = item.Field()
     tag_links = item.Field()
-    tag_links1 = item.Field()
+
 
 
 class QuoteWebsiteItem1(item.Item):

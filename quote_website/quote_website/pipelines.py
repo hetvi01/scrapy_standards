@@ -41,8 +41,7 @@ class QuoteWebsitePipeline:
                                                 title text,
                                                 author text,
                                                 tags text,
-                                                tag_links text,
-                                                tag_links1 text
+                                                tag_links text
                                             )
                     """)
         logger.info("Tables Created")
@@ -55,13 +54,13 @@ class QuoteWebsitePipeline:
                 cur.execute("""SELECT exists(SELECT * FROM quotes WHERE title=%s)""", (item['title'][0],))
                 result = cur.fetchone()
         if not result[0]:
-            self.cursor.execute("""INSERT INTO quotes VALUES (%s,%s,%s,%s,%s)""",
+            self.cursor.execute("""INSERT INTO quotes VALUES (%s,%s,%s,%s)""",
                                 (
                                     title,
                                     item['author'][0],
                                     str(item['tags']),
                                     str(item['tag_links']),
-                                    item['tag_links1']
+
                                 )
                                 )
             logger.info("Stored data to row of table")

@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'quote_website.spiders'
 ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-# CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 10
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -49,9 +49,18 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'quote_website.middlewares.QuoteWebsiteDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {
+    'quote_website.middlewares.QuoteWebsiteDownloaderMiddleware': 543,
+
+    """
+     We can get around this by rotating through multiple user agents, that appear like real visitors to their site.
+        we're going to use the scrapy-user-agents
+        The scrapy-user-agents download middleware contains about 2,200 common user agent strings, and rotates through them
+     as your scraper makes requests.
+    """
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,  # disable default middleware
+    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -62,7 +71,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'quote_website.pipelines.QuoteWebsitePipeline': 300,
+    'quote_website.pipelines.QuoteWebsitePipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
